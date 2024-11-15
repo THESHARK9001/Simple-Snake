@@ -44,6 +44,10 @@ def draw_player(player_size, segments):
 def main():
     game_over = False
     game_ended = False
+    p_north = False
+    p_east = False
+    p_south = False
+    p_west = False
     x = width / 2
     y = width / 2
     x_vel = 0
@@ -82,18 +86,34 @@ def main():
             if event.type == pygame.QUIT:
                 game_over = True
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_a or event.key == pygame.K_LEFT:
+                if event.key == pygame.K_a and p_east == False or event.key == pygame.K_LEFT and p_east == False:
                     x_vel = -player_size
                     y_vel = 0
-                elif event.key == pygame.K_d or event.key == pygame.K_RIGHT:
+                    p_north = False
+                    p_east = False
+                    p_south = False
+                    p_west = True
+                elif event.key == pygame.K_d and p_west == False or event.key == pygame.K_RIGHT and p_west == False:
                     x_vel = player_size
                     y_vel = 0
-                elif event.key == pygame.K_s or event.key == pygame.K_DOWN:
+                    p_north = False
+                    p_east = True
+                    p_south = False
+                    p_west = False
+                elif event.key == pygame.K_s and p_north == False or event.key == pygame.K_DOWN and p_north == False:
                     x_vel = 0
                     y_vel = player_size
-                elif event.key == pygame.K_w or event.key == pygame.K_UP:
+                    p_north = False
+                    p_east = False
+                    p_south = True
+                    p_west = False
+                elif event.key == pygame.K_w and p_south == False or event.key == pygame.K_UP and p_south == False:
                     x_vel = 0
                     y_vel = -player_size
+                    p_north = True
+                    p_east = False
+                    p_south = False
+                    p_west = False
         if x > width or x < 0 or y > height or y < 0:
             game_ended = True
             death_sound.play()
